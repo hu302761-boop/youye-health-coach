@@ -1,0 +1,71 @@
+name: YouyeHealthCoach
+options:
+  minimumXcodeGenVersion: 2.38.0
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: ""
+targets:
+  YouyeHealthCoachApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: iOSApp
+        excludes:
+          - "Info.plist"
+          - "YouyeHealthCoach.entitlements"
+    dependencies:
+      - package: YouyeHealthCoach
+      # The Watch companion remains a separate later-phase target until the matching watchOS
+      # component is installed and verified. Keeping it out of the iPhone dependency graph lets
+      # the phone app build and install independently today.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.youye.privatehealthcoach
+        # Universal iOS app: iPhone and iPad use the same private local profile and
+        # daily-card workflow. Layout adaptations belong in SwiftUI, not in a separate
+        # content fork.
+        TARGETED_DEVICE_FAMILY: "1,2"
+        "EXCLUDED_ARCHS[sdk=iphonesimulator*]": x86_64
+        INFOPLIST_FILE: iOSApp/Info.plist
+        CODE_SIGN_ENTITLEMENTS: iOSApp/YouyeHealthCoach.entitlements
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        GENERATE_INFOPLIST_FILE: NO
+  YouyeHealthCoachMacApp:
+    type: application
+    platform: macOS
+    sources:
+      - path: macOSApp
+        excludes:
+          - "Info.plist"
+          - "YouyeHealthCoachMacApp.entitlements"
+    dependencies:
+      - package: YouyeHealthCoach
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.youye.privatehealthcoach.mac
+        INFOPLIST_FILE: macOSApp/Info.plist
+        CODE_SIGN_ENTITLEMENTS: macOSApp/YouyeHealthCoachMacApp.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+  YouyeHealthCoachWatchApp:
+    type: application
+    platform: watchOS
+    sources:
+      - path: WatchApp
+        excludes:
+          - "Info.plist"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.youye.privatehealthcoach.watchkitapp
+        # Keep this value equal to the paired iPhone target's PRODUCT_BUNDLE_IDENTIFIER.
+        # If the owner changes the iPhone identifier for signing, this value must change with it.
+        WK_COMPANION_APP_BUNDLE_IDENTIFIER: com.youye.privatehealthcoach
+        INFOPLIST_FILE: WatchApp/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        WATCHOS_DEPLOYMENT_TARGET: "10.0"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+packages:
+  YouyeHealthCoach:
+    path: .

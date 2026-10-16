@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- This Android target is a navigation/availability skeleton only.  It deliberately
+         declares no Health Connect read or write permission until a real, user-triggered
+         consent + aggregate-read + confirmed-write flow has passed Android-device review. -->
+
+    <queries>
+        <!-- Required only to discover the optional Health Connect provider on Android 13 and below. -->
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
+
+    <application
+        android:allowBackup="false"
+        android:label="私人健康教练"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.YouyeHealthCoach">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
