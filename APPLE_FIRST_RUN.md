@@ -7,7 +7,7 @@
 1. 从 Mac App Store 安装完整 **Xcode**，首次打开并接受协议、完成组件安装。iPhone 模拟器可稍后再装；它有助于布局检查，但不是连接真机安装的前置条件。
 2. 打开终端，在项目目录运行：
 
-        cd "/Users/jing/Documents/个人/YouyeHealthCoach"
+        cd "/path/to/youye-health-coach"
         zsh scripts/check_iphone_build_environment.sh
         zsh scripts/preflight_ios_build.sh
         zsh scripts/preflight_watchos_build.sh
